@@ -1,0 +1,3 @@
+﻿Ilja|+37212345|email@email.com
+John|+1500000|john@email.com
+Lex|+37256568029|alexxxey.ivanovvv@gmail.com
