@@ -86,26 +86,74 @@ def sort_archieve(archieve):
     combined.sort()
     for i in range(len(combined)):
         archieve[0][i], archieve[1][i], archieve[2][i] = combined[i]
-    print_to_output("Archive sorted.")
+    print_to_output("Archeive sorted.")
 
-def send_email():
-    print_to_output("Send Email not supported from UI mode yet.")
 
-def share_contact_by_email(archieve):
-    print_to_output("Sharing not supported in simplified UI mode.")
+
+
+def handle_email_sending(archieve, recipient, password):
+    kiri = "Tere, see on test"
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    kellelt = "alexxxey.ivanovvv@gmail.com"
+    
+    context = ssl.create_default_context()
+    msg = EmailMessage()
+    msg.set_content(kiri)
+    msg['Subject'] = "Test"
+    msg['From'] = kellelt
+    msg['To'] = recipient
+    
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls(context=context)
+        server.login(kellelt, password)
+        server.send_message(msg)
+        return "Email sent successfully!"
+    except Exception as e:
+        return f"Failed to send email: {str(e)}"
+    finally:
+        server.quit()
+
+
+
+def share_contact_by_email(archieve, recipient, password):
+    """Send the contact list via email"""
+    contact_list = "My Contacts:\n\n" + "\n".join(
+        f"{name} | {number} | {email}" 
+        for name, number, email in zip(*archieve)
+    )
+    
+    sender_email = "alexxxey.ivanovvv@gmail.com"
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    
+    msg = EmailMessage()
+    msg.set_content(contact_list)
+    msg['Subject'] = "Shared Contact List"
+    msg['From'] = sender_email
+    msg['To'] = recipient
+    
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, password)
+            server.send_message(msg)
+        return "Contact list sent successfully!"
+    except Exception as e:
+        return f"Failed to send contacts: {str(e)}"
+
 
 def backup_archieve():
     try:
         shutil.copy("archieve.txt", f"archieve_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
         print_to_output("Backup created.")
-    except Exception as e:
-        print_to_output(f"Backup failed: {e}")
+    except:
+        print_to_output(f"Backup failed")
 
 def delete_archieve_file():
     try:
         os.remove("archieve.txt")
         print_to_output("Archive file deleted.")
-    except FileNotFoundError:
-        print_to_output("Archive file not found.")
-    except Exception as e:
-        print_to_output(f"Error deleting archive: {e}")
+    except:
+        print_to_output(f"Error deleting archive:")

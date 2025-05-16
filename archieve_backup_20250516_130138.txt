@@ -1,5 +1,4 @@
 Daniil|5555555|Danila@mail.com
-Aleksei|+1111|alexxxey.ivanovvv@gmail.com
+Lex|22222222|lexa@mail.com
 Johnny|+3725656|johny@mail.com
 Jacky|+12345|Jackey.Jackey@supermail.com
-Jean|+3222222|jean.pierre@gmail.com
